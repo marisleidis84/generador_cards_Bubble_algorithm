@@ -89,14 +89,15 @@ function obtenerImgPaloCard() {
 
 //aqui estoy dibujando la crata en el html
 function dibujarCarta() {
+    let row = document.querySelector(".row");
     const [iconSuperior, iconInferior] = obtenerImgPaloCard();
     const iconNum = obtenerValorCard();
     //console.log(iconNum);
     //Arreglo de numero del 1 al 13
-    arreglo1.push(iconNum);
+    arreglo1.push(aux);
 
-    //iconSperiorOrdenar.push(iconSuperior);
-    //iconInferiorOrdenar.push(iconInferior);
+    iconSperiorOrdenar.push(iconSuperior);
+    iconInferiorOrdenar.push(iconInferior);
 
 
 
@@ -132,6 +133,7 @@ function dibujarCarta() {
 
     divCard.appendChild(divRow3);
     divRow3.appendChild(divCol3);
+    row.appendChild(divCard);
 }
 
 function generadorCards() {
@@ -144,28 +146,78 @@ function generadorCards() {
 
 //fncion que ordena
 const ordenar = () => {
-    console.log("cdcdgfsdj");
     //let cardNumbers = document.querySelector("#input").value;
-    let wall = arreglo1 - 1; //we start the wall at the end of the arrayconsole.log(wall)
+    let wall = arreglo1.length - 1; //we start the wall at the end of the arrayconsole.log(wall)
     while (wall > 0) {
-        let index = 0;
-        while (index < wall) {
+        let i = 0;
+        while (i < wall) {
             //compare the adjacent positions, if the right one is bigger, we have to swap
-            if (arreglo1[index] > arreglo1[index + 1]) {
-                let aux1 = arreglo1[index];
-                arreglo1[index] = arreglo1[index + 1];
-                arreglo1[index + 1] = aux1;
+            if (arreglo1[i] > arreglo1[i + 1]) {
+                let aux1 = arreglo1[i];
+                arreglo1[i] = arreglo1[i + 1];
+                arreglo1[i + 1] = aux1;
 
+                let auxIconSuperior = iconSperiorOrdenar[i];
+                iconSperiorOrdenar[i] = iconSperiorOrdenar[i + 1];
+                iconSperiorOrdenar[i + 1] = auxIconSuperior;
 
-                
-                //console.log(iconSuperiorOrdenar);
-                //console.log(iconInferiorOrdenar);
+                let auxIconInferior = iconInferiorOrdenar[i];
+                iconInferiorOrdenar[i] = iconInferiorOrdenar[i + 1];
+                iconInferiorOrdenar[i + 1] = auxIconInferior;
             }
-            console.log(arreglo1);
-            index++;
+            //dibjando la card ordenada
+            let divCont = document.createElement("div");
+            divCont.classList.add("row");
+            for (let i = 0; i < arreglo1.length; i++) {
+
+                let divCard = document.createElement("div");
+                let divRow1 = document.createElement("div");
+                let divCol1 = document.createElement("div");
+                divCard.classList.add("card");
+                divRow1.classList.add("row", "rowSuperior");
+                divCol1.classList.add("col-md-12", "icon1");
+                divCol1.innerHTML = iconSperiorOrdenar[i];
+
+                document.body.appendChild(divCard);
+                divCard.appendChild(divRow1);
+                divRow1.appendChild(divCol1);
+
+                //dibjando la row2
+                let divRow2 = document.createElement("div");
+                let divCol2 = document.createElement("div");
+                divRow2.classList.add("row", "rowNumber");
+                divCol2.classList.add("col-md-12", "numero");
+                divCol2.innerHTML = cambiarNumeroPorLetra(arreglo1[i]);
+
+                divCard.appendChild(divRow2);
+                divRow2.appendChild(divCol2);
+
+                //dibjando la row3
+                let divRow3 = document.createElement("div");
+                let divCol3 = document.createElement("div");
+                divRow3.classList.add("row", "rowInferior");
+                divCol3.classList.add("col-md-12", "icon2");
+                divCol3.innerHTML = iconInferiorOrdenar[i];
+
+                divCard.appendChild(divRow3);
+                divRow3.appendChild(divCol3);
+                divCont.appendChild(divCard);
+
+            }
+            document.body.appendChild(divCont);
+            i++;
         }
         wall--; //decrease the wall for optimization
     }
 
 }
-
+//funcion para cambiar los nmeros 1, 11 12 y 13 por las letras qe corresponden
+function cambiarNumeroPorLetra(valor) {
+        switch (valor) {
+            case 1: return "A";
+            case 11: return "J";
+            case 12: return "Q";
+            case 13: return "K";
+            default: return valor;
+        }
+}
