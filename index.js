@@ -95,7 +95,6 @@ function dibujarCarta() {
     //Arreglo de numero del 1 al 13
     arreglo1.push(iconNum);
 
-    //arreglo.push(aux);
     //iconSperiorOrdenar.push(iconSuperior);
     //iconInferiorOrdenar.push(iconInferior);
 
@@ -146,8 +145,8 @@ function generadorCards() {
 //fncion que ordena
 const ordenar = () => {
     console.log("cdcdgfsdj");
-    let cardNumbers = document.querySelector("#input").value;
-    let wall = cardNumbers - 1; //we start the wall at the end of the arrayconsole.log(wall)
+    //let cardNumbers = document.querySelector("#input").value;
+    let wall = arreglo1 - 1; //we start the wall at the end of the arrayconsole.log(wall)
     while (wall > 0) {
         let index = 0;
         while (index < wall) {
@@ -156,22 +155,17 @@ const ordenar = () => {
                 let aux1 = arreglo1[index];
                 arreglo1[index] = arreglo1[index + 1];
                 arreglo1[index + 1] = aux1;
-                console.log("cdcdgfsdj");
-                console.log(arreglo1);
+
+
+                
                 //console.log(iconSuperiorOrdenar);
                 //console.log(iconInferiorOrdenar);
             }
+            console.log(arreglo1);
             index++;
         }
         wall--; //decrease the wall for optimization
     }
 
-}
-
-function generadorCards() {
-    let cardNumbers = document.querySelector("#input").value;
-    for (let i = 0; i < cardNumbers; i++) {
-        dibujarCarta();
-    }
 }
 
